@@ -1,69 +1,63 @@
 <template>
-    <div class="dashboard">
-      <div class="sidebar">
-        <ul>
-            <img src="@/image/student.png" alt="student" style="height: 80px;">
-          <li><a href="#">Home</a></li>
-          <li><a href="#">Dashboard</a></li>
-          <li><a href="#">Reports</a></li>
-          <li><a href="#">Settings</a></li>
-        </ul>
-      </div>
-      <div class="main-content">
-        <h1>{{ pageTitle }}</h1>
-        <p>Welcome to the {{ pageTitle }}!</p>
-        <button @click="changePageTitle">Change Page Title</button>
-      </div>
-    </div>
-  </template>
-  
-  <script>
-  export default {
-    data() {
-      return {
-        pageTitle: 'Dashboard'
-      }
+  <div>
+    <main>
+      <section class="d-flex" style="height: 150vh">
+        <div class="bg-secondary w-25 pt-5">
+          <h3 class="text-info">Student Dashboard</h3>
+          <ul style="list-style-type: none">
+            <li class="my-3">
+              <nuxt-link to="/">Home Page</nuxt-link>
+            </li>
+            <li class="my-3">
+              <nuxt-link to="/dashboard">Dashboard</nuxt-link>
+            </li>
+            <li class="my-3">
+              <nuxt-link to="/profile" @click="fetchProfile">Profile</nuxt-link>
+            </li>
+            <li class="my-3">
+              <nuxt-link to="/rules">Rules & Regulation</nuxt-link>
+            </li>
+            <li class="my-3">
+              <nuxt-link to="/feedback">Feedback & Rating</nuxt-link>
+            </li>
+            <li class="my-3">
+              <nuxt-link to="/message">Message</nuxt-link>
+            </li>
+            <li class="my-3">
+              <a href="#" @click="logOut()">Logout</a>
+            </li>
+          </ul>
+        </div>
+        <div class="w-75 pt-5">
+          <slot></slot>
+        </div>
+      </section>
+    </main>
+    <footer></footer>
+  </div>
+</template>
+
+<script>
+import { mapActions } from "vuex";
+
+export default {
+  name: "DashboardTemplate",
+  methods: {
+    ...mapActions(["fetchProfile"]),
+    logOut() {
+      localStorage.removeItem("user");
+      this.$router.push({ name: "home" });
     },
-    methods: {
-      changePageTitle() {
-        this.pageTitle = 'Student Dashboard';
-      }
-    }
-  }
-  </script>
-  
-  <style scoped>
-  .dashboard {
-    display: flex;
-  }
-  
-  .sidebar {
-    width: 200px;
-    height: 600px;
-    background: #f0f0f0;
-    padding: 20px;
-  }
-  
-  .sidebar ul {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .sidebar li {
-    margin-bottom: 10px;
-  }
-  
-  .sidebar a {
-    text-decoration: none;
-    color: #333;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    font-style:inherit;
-    font-size: 17px;
-  }
-  
-  .main-content {
-    flex: 1;
-    padding: 20px;
-  }
-  </style>
-  
+  },
+};
+</script>
+
+<style scoped>
+a {
+  color: white;
+  text-decoration: none;
+  text-align: left;
+  font-size: 22px;
+  font-family: Times New Roman;
+}
+</style>
